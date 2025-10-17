@@ -14,7 +14,7 @@ const Button = ({ label, onClick, resetTrigger }) => {
   }, [resetTrigger]);
 
   return (
-    <Button
+    <button
       onClick={handleClick}
       style={{
         backgroundColor: active ? '#004d00' : '#007BFF',
