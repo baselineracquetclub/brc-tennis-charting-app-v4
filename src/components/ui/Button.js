@@ -1,23 +1,35 @@
+import React, { useEffect, useState } from 'react';
 
-import React, { useState } from 'react';
+const Button = ({ label, onClick, resetTrigger }) => {
+  const [active, setActive] = useState(false);
 
-export const Button = ({ children, onClick, className = '', active = false }) => {
-  const [isPressed, setIsPressed] = useState(false);
-  const pressed = isPressed || active;
-  const cls = `${className} big-btn ${pressed ? 'pressed' : ''}`.trim();
+  const handleClick = () => {
+    setActive(true);
+    onClick(label);
+  };
+
+  // Reset button highlight when resetTrigger changes
+  useEffect(() => {
+    setActive(false);
+  }, [resetTrigger]);
 
   return (
     <button
-      onMouseDown={() => setIsPressed(true)}
-      onMouseUp={() => setIsPressed(false)}
-      onMouseLeave={() => setIsPressed(false)}
-      onTouchStart={() => setIsPressed(true)}
-      onTouchEnd={() => setIsPressed(false)}
-      onClick={onClick}
-      className={cls}
-      type="button"
+      onClick={handleClick}
+      style={{
+        backgroundColor: active ? '#004d00' : '#007BFF',
+        color: '#fff',
+        border: active ? '2px solid #00FF00' : '2px solid transparent',
+        padding: '12px 20px',
+        borderRadius: '8px',
+        fontSize: '15px',
+        cursor: 'pointer',
+        transition: 'all 0.2s ease',
+      }}
     >
-      {children}
+      {label}
     </button>
   );
 };
+
+export default Button;
